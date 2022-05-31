@@ -36,10 +36,9 @@ public class GuestController extends HttpServlet {
 		String action = request.getParameter("action");
 		System.out.println(action);
 		
-		if ("addlist".equals(action)) {	//add리스트일 때
+		if ("addList".equals(action)) {	//add리스트일 때
 			//포워드
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addList.jsp");
-			rd.forward(request, response);
+			WebUtil.forward(request, response, "/WEB-INF/addList.jsp");
 			
 		} else if("add".equals(action)) {	//add일 때	
 			
@@ -54,7 +53,7 @@ public class GuestController extends HttpServlet {
 			guestBookDao.guestAdd(guestBookVo);
 			
 			//리다이렉트 list
-			WebUtil.forward(request, response, "/WEB-INF/addList.jsp");
+			WebUtil.forward(request, response, "/gbc?action=addList");
 			
 		} else if("deleteForm".equals(action)) { //삭제폼일 때
 			//포워드
@@ -68,11 +67,14 @@ public class GuestController extends HttpServlet {
 			GuestBookVo guestBookVo = new GuestBookVo(no, password);	
 			GuestBookDao guestBookDao = new GuestBookDao();
 			
-			guestBookDao.guestDelete(no);
-				
-			
+			if (guestBookVo.getPassword().equals(password)) {
+				guestBookDao.guestDelete(no);
+			} else {
+
+			}
 			//리다이렉트 list
-			WebUtil.forward(request, response, "/guestbook2/gbc?action=addList");
+			WebUtil.forward(request, response, "/gbc?action=addList");
+			WebUtil.forward(request, response, "/gbc?action=addList");
 			
 			
 		} else {

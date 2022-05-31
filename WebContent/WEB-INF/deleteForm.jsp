@@ -16,11 +16,11 @@
 	
 	<body>
 		<form action="./gbc" method = "get">
+		<input type = "hidden" name = "action" value = "delete"><br>
 		<input type = "text" name = "no" value = <%=no%>>
 		비밀번호<input type ="password" name = "password" value = "">
 		<button type = "submit">확인</button>
 		</form>
-		<input type = "hidden" name = "action" value = "delete"><br>
 		<a href = "/guestbook2/gbc?action=addList">메인으로 돌아가기</a>
 	</body>
 </html>
