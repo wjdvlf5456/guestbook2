@@ -1,7 +1,6 @@
 package com.javaex.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,9 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.GuestBookDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.GuestBookVo;
 
-@WebServlet("/pbc")
+@WebServlet("/gbc")
 public class GuestController extends HttpServlet {
 
 	//필드
@@ -38,10 +38,10 @@ public class GuestController extends HttpServlet {
 		
 		if ("addlist".equals(action)) {	//add리스트일 때
 			//포워드
-			RequestDispatcher rd = request.getRequestDispatcher("/addList.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addList.jsp");
 			rd.forward(request, response);
 			
-		} else if("add".equals(action)) {	//등록일 때	
+		} else if("add".equals(action)) {	//add일 때	
 			
 			String name = request.getParameter("name");
 			String password = request.getParameter("password");
@@ -54,12 +54,11 @@ public class GuestController extends HttpServlet {
 			guestBookDao.guestAdd(guestBookVo);
 			
 			//리다이렉트 list
-			response.sendRedirect("/phonebook2/pbc?action=addList");
+			WebUtil.forward(request, response, "/WEB-INF/addList.jsp");
 			
-		} else if("deleteForm".equals(action)) { //등록폼일 때
+		} else if("deleteForm".equals(action)) { //삭제폼일 때
 			//포워드
-			RequestDispatcher rd = request.getRequestDispatcher("/addList.jsp");
-			rd.forward(request, response);
+			WebUtil.forward(request, response,"/WEB-INF/deleteForm.jsp");			
 			
 		} else if("delete".equals(action)){	 //삭제일때
 			
@@ -73,7 +72,7 @@ public class GuestController extends HttpServlet {
 				
 			
 			//리다이렉트 list
-			response.sendRedirect("./pbc?action=deleteForm");
+			WebUtil.forward(request, response, "/guestbook2/gbc?action=addList");
 			
 			
 		} else {
@@ -84,6 +83,7 @@ public class GuestController extends HttpServlet {
 	
 	//post형식으로 요청시 호출 메소드
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		doGet(request, response);
 		
 		

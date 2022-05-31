@@ -64,14 +64,13 @@ public class GuestBookDao {
 			// SQL문 준비
 			String query = "";
 			query += " insert into guestbook ";
-			query += " values (seq_guestbook_no.nextval, ?, ?, ? ,?)";
+			query += " values (seq_guestbook_no.nextval, ?, ?, ?, sysdate)";
 
 			// 바인딩
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, guestBookVo.getName());
 			pstmt.setString(2, guestBookVo.getPassword());
 			pstmt.setString(3, guestBookVo.getContent());
-			pstmt.setString(4, guestBookVo.getRegDate());
 
 			// 실행
 			// 성공회수
