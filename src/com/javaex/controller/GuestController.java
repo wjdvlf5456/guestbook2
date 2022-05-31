@@ -67,13 +67,13 @@ public class GuestController extends HttpServlet {
 			GuestBookVo guestBookVo = new GuestBookVo(no, password);	
 			GuestBookDao guestBookDao = new GuestBookDao();
 			
-			if (guestBookVo.getPassword().equals(password)) {
+			if (password.equals(guestBookDao.guestSelect().get(no).getPassword())) {
 				guestBookDao.guestDelete(no);
 			} else {
+				System.out.println("비밀번호가 틀립니다.");
 
 			}
 			//리다이렉트 list
-			WebUtil.forward(request, response, "/gbc?action=addList");
 			WebUtil.forward(request, response, "/gbc?action=addList");
 			
 			
